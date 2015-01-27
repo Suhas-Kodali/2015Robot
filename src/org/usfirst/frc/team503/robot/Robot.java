@@ -42,7 +42,6 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
-    	
     	(new TeleopDriveCommand()).start();
     }
 

@@ -1,28 +1,26 @@
 package org.usfirst.frc.team503.robot.commands;
 
-import org.usfirst.frc.team503.robot.OI;
 import org.usfirst.frc.team503.robot.subsystems.ElevatorSubsystem;
+import org.usfirst.frc.team503.robot.subsystems.ElevatorSubsystem.ElevatorSolenoidPosition;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ElevatorUpCommand extends Command {
-	
+public class SetElevatorClawCommand extends Command {
+	ElevatorSubsystem instance = ElevatorSubsystem.getInstance();
+	ElevatorSolenoidPosition position;
 
-    public ElevatorUpCommand() {
-    	
+    public SetElevatorClawCommand(ElevatorSolenoidPosition position) {
+    	this.position = position;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(OI.position < ElevatorSubsystem.getPositions().length - 1){
-    		ElevatorSubsystem.setSetpoint(ElevatorSubsystem.getPositions()[OI.position++]);
-    	}
-    	ElevatorSubsystem.pidEnable();
+    	instance.setSolenoidPosition(position);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -31,17 +29,15 @@ public class ElevatorUpCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (ElevatorSubsystem.onTarget() && ElevatorSubsystem.isStopped());
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	ElevatorSubsystem.pidDisable();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }

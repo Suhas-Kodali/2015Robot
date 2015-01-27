@@ -70,10 +70,6 @@ public class ElevatorSubsystem extends Subsystem implements PIDSource, PIDOutput
 		return positions;
 	}
 	
-	public ElevatorPosition[] getElevatorPositions(){
-		return positions;
-	}
-	
 	public void setSolenoidPosition(ElevatorSolenoidPosition position){
 			elevatorSolenoid.set(position.position);
 	}

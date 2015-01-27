@@ -2,7 +2,7 @@ package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.robot.commands.ElevatorDownCommand;
 import org.usfirst.frc.team503.robot.commands.ElevatorUpCommand;
-import org.usfirst.frc.team503.robot.commands.SetElevatorSolenoidCommand;
+import org.usfirst.frc.team503.robot.commands.SetElevatorClawCommand;
 import org.usfirst.frc.team503.robot.subsystems.ElevatorSubsystem.ElevatorSolenoidPosition;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -64,8 +64,8 @@ public class OI {
 		return joystick.getRawAxis(2);	
 	}
 	public static void init(){
-		elevatorButtonOpen.whenPressed(new SetElevatorSolenoidCommand(ElevatorSolenoidPosition.OPEN));
-		elevatorButtonClose.whenPressed(new SetElevatorSolenoidCommand(ElevatorSolenoidPosition.CLOSE));
+		elevatorButtonOpen.whenPressed(new SetElevatorClawCommand(ElevatorSolenoidPosition.OPEN));
+		elevatorButtonClose.whenPressed(new SetElevatorClawCommand(ElevatorSolenoidPosition.CLOSE));
 		elevatorButtonMoveUp.whenPressed(new ElevatorUpCommand());
 		elevatorButtonMoveDown.whenPressed(new ElevatorDownCommand());
 	}
