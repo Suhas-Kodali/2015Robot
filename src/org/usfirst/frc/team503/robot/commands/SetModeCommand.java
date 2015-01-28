@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SetModeCommand extends Command {
 	
 	int mode;
-	Drivetrain drivetrain;
 	
     public SetModeCommand(int mode) {
         this.mode = mode;

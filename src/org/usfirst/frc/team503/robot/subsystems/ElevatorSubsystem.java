@@ -21,8 +21,8 @@ public class ElevatorSubsystem extends Subsystem implements PIDSource, PIDOutput
     private final static PIDController controller = new PIDController(p, i, d, getInstance(), getInstance());
     private final static Encoder elevatorEncoder = new Encoder(0, 1);
 	
-	CANTalon frontLeftMotor = Drivetrain.drive.frontLeftMotor;
-	CANTalon frontRightMotor = Drivetrain.drive.frontRightMotor;
+	CANTalon frontLeftMotor = Drivetrain.getInstance().drive.frontLeftMotor;
+	CANTalon frontRightMotor = Drivetrain.getInstance().drive.frontRightMotor;
 	Solenoid elevatorSolenoid = new Solenoid(2);
 	
     

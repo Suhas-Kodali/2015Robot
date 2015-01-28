@@ -13,10 +13,10 @@ public class GrabberSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-	CANTalon midLeftMotor = Drivetrain.drive.midLeftMotor;
-	CANTalon midRightMotor = Drivetrain.drive.midRightMotor;
-	CANTalon rearLeftMotor = Drivetrain.drive.rearLeftMotor;
-	CANTalon rearRightMotor = Drivetrain.drive.rearRightMotor;
+	CANTalon midLeftMotor = Drivetrain.getInstance().drive.midLeftMotor;
+	CANTalon midRightMotor = Drivetrain.getInstance().drive.midRightMotor;
+	CANTalon rearLeftMotor = Drivetrain.getInstance().drive.rearLeftMotor;
+	CANTalon rearRightMotor = Drivetrain.getInstance().drive.rearRightMotor;
 	
 	DigitalInput outSwitch = new DigitalInput(0); 	
 	DigitalInput inSwitch = new DigitalInput(1);

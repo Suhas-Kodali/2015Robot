@@ -23,10 +23,19 @@ public class Drivetrain extends Subsystem {
 	public Solenoid grabberSolenoid = new Solenoid(1);
 	
 	
+	
 	public void arcadeDrive(double moveValue, double rotateValue, boolean squaredInputs, int mode){
 		drive.arcadeDrive(moveValue, rotateValue, squaredInputs, mode);
 	}
-
+	
+	public void setElevatorSolenoid(boolean position){
+		elevatorSolenoid.set(position);
+	}
+	
+	public void setGrabberSolenoid(boolean position){
+		grabberSolenoid.set(position);
+	}
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
