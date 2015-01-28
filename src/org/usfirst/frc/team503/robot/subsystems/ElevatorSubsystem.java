@@ -74,8 +74,8 @@ public class ElevatorSubsystem extends Subsystem implements PIDSource, PIDOutput
 			elevatorSolenoid.set(position.position);
 	}
 	
-	public void setSpeed(double speed, int mode){
-		if(mode == 2){
+	public void setSpeed(double speed){
+		if(OI.mode == 2){
 			frontLeftMotor.set(speed);
 			frontRightMotor.set(speed);
 		}
@@ -87,7 +87,7 @@ public class ElevatorSubsystem extends Subsystem implements PIDSource, PIDOutput
     	@Override
 	public void pidWrite(double speed) {
 		SmartDashboard.putNumber("PIDWRITE", speed);
-        setSpeed(speed, OI.mode);
+        setSpeed(speed);
 	}
 	@Override
 	public double pidGet() {

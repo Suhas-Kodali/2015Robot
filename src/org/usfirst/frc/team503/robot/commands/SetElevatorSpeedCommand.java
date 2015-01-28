@@ -3,6 +3,7 @@ package org.usfirst.frc.team503.robot.commands;
 import org.usfirst.frc.team503.robot.OI;
 import org.usfirst.frc.team503.robot.subsystems.ElevatorSubsystem;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -23,12 +24,12 @@ public class SetElevatorSpeedCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	instance.setSpeed(OI.getElevatorInput(), OI.mode);
+    	instance.setSpeed(OI.getElevatorInput());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return DriverStation.getInstance().isOperatorControl();
     }
 
     // Called once after isFinished returns true

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team503.robot.subsystems;
 
+import org.usfirst.frc.team503.robot.OI;
+
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -35,23 +37,25 @@ public class GrabberSubsystem extends Subsystem {
 		return inSwitch.get();
 	}
 	
-	public void setGrabberSpeed(int speed) {
-		midLeftMotor.set(speed);
-		midRightMotor.set(speed);
-		rearLeftMotor.set(speed);
-		rearRightMotor.set(speed);
+	public void setSpeed(int speed) {
+		if(OI.mode == 3){
+			midLeftMotor.set(speed);
+			midRightMotor.set(speed);
+			rearLeftMotor.set(speed);
+			rearRightMotor.set(speed);
+		}
 	}
 	
 	public void grabberOut() {
-		setGrabberSpeed(1);
+		setSpeed(1);
 	}
 	
 	public void grabberIn() {
-		setGrabberSpeed(-1);
+		setSpeed(-1);
 	}
 	
 	public void grabberStop(){
-		setGrabberSpeed(0);
+		setSpeed(0);
 	}
 	
     public void initDefaultCommand() {
