@@ -6,6 +6,7 @@ import org.usfirst.frc.team503.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team503.robot.subsystems.ElevatorSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,12 +19,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
-
+	PowerDistributionPanel pdp = new PowerDistributionPanel();
+	
     public void robotInit() {
     	OI.init();
     	SmartDashboard.putData(Drivetrain.getInstance());
         SmartDashboard.putData(ElevatorSubsystem.getInstance());
+        
     }
 	
 	public void disabledPeriodic() {
@@ -39,6 +41,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+    
     }
 
     public void teleopInit() {
@@ -58,6 +61,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        SmartDashboard.putDouble("Current current:", pdp.getTotalCurrent());
     }
     
     /**
