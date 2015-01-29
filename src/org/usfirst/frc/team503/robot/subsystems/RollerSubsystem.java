@@ -18,6 +18,15 @@ public class RollerSubsystem extends Subsystem {
 	Solenoid rollerSolenoid = new Solenoid(2);
 	Relay rollerRelay = new Relay(0);
 	
+	public enum Direction{
+		IN(Value.kForward), OUT(Value.kReverse), OFF(Value.kOff);
+		private Value value;
+		
+		private Direction(Value value){
+			this.value = value;
+		}
+	}
+	
 	public enum RollerSolenoidPosition{
         EXTEND(true), RETRACT(false);
         private boolean position;
@@ -30,8 +39,8 @@ public class RollerSubsystem extends Subsystem {
 		rollerSolenoid.set(position.position);
 	}
 	
-	public void setRollerRelay(Value value){
-		rollerRelay.set(value);		
+	public void setRollerRelay(Direction direction){
+		rollerRelay.set(direction.value);		
 	}
     
     // Put methods for controlling this subsystem

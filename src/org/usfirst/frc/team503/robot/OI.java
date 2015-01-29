@@ -4,9 +4,14 @@ import org.usfirst.frc.team503.robot.commands.ElevatorDownCommand;
 import org.usfirst.frc.team503.robot.commands.ElevatorUpCommand;
 import org.usfirst.frc.team503.robot.commands.SetElevatorClawCommand;
 import org.usfirst.frc.team503.robot.commands.SetModeCommand;
+import org.usfirst.frc.team503.robot.commands.SetRollerCommand;
+import org.usfirst.frc.team503.robot.commands.SetRollerSolenoidCommand;
 import org.usfirst.frc.team503.robot.subsystems.ElevatorSubsystem.ElevatorSolenoidPosition;
+import org.usfirst.frc.team503.robot.subsystems.RollerSubsystem.Direction;
+import org.usfirst.frc.team503.robot.subsystems.RollerSubsystem.RollerSolenoidPosition;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
@@ -50,12 +55,15 @@ public class OI {
 	
 	static JoystickButton elevatorButtonOpen = new JoystickButton(joystick, 1),
 			elevatorButtonClose = new JoystickButton(joystick, 2),
-			elevatorButtonMoveUp = new JoystickButton(joystick,3),
-			elevatorButtonMoveDown = new JoystickButton(joystick,4);
-	
-	static JoystickButton buttonMode1 = new JoystickButton(joystick, 5),
-			buttonMode2 = new JoystickButton(joystick, 6),
-			buttonMode3 = new JoystickButton(joystick,7);
+			elevatorButtonMoveUp = new JoystickButton(joystick, 3),
+			elevatorButtonMoveDown = new JoystickButton(joystick, 4),
+			mode1Button = new JoystickButton(joystick, 5),
+			mode2Button = new JoystickButton(joystick, 6),
+			mode3Button = new JoystickButton(joystick, 7),
+			rollerButtonExtend = new JoystickButton(joystick, 8),
+			rollerButtonRetract = new JoystickButton(joystick, 9),
+			rollerButtonIn = new JoystickButton(joystick, 10),
+			rollerButtonOut = new JoystickButton(joystick, 11);
 	
 	
 	public static double getJoystickY(){
@@ -69,15 +77,27 @@ public class OI {
 	public static double getElevatorInput(){
 		return joystick.getRawAxis(2);	
 	}
+	
+	public static boolean getRollerButtonIn(){
+		return rollerButtonIn.get();
+	}
+	
+	public static boolean getRollerButtonOut(){
+		return rollerButtonOut.get();
+	}
+	
 	public static void init(){
 		elevatorButtonOpen.whenPressed(new SetElevatorClawCommand(ElevatorSolenoidPosition.OPEN));
 		elevatorButtonClose.whenPressed(new SetElevatorClawCommand(ElevatorSolenoidPosition.CLOSE));
 		elevatorButtonMoveUp.whenPressed(new ElevatorUpCommand());
 		elevatorButtonMoveDown.whenPressed(new ElevatorDownCommand());
-		buttonMode1.whenPressed(new SetModeCommand(1));
-		buttonMode2.whenPressed(new SetModeCommand(2));
-		buttonMode3.whenPressed(new SetModeCommand(3));
-
+		mode1Button.whenPressed(new SetModeCommand(1));
+		mode2Button.whenPressed(new SetModeCommand(2));
+		mode3Button.whenPressed(new SetModeCommand(3));
+		rollerButtonExtend.whenPressed(new SetRollerSolenoidCommand(RollerSolenoidPosition.EXTEND));
+		rollerButtonRetract.whenPressed(new SetRollerSolenoidCommand(RollerSolenoidPosition.RETRACT));
+		rollerButtonIn.whileHeld(new SetRollerCommand(Direction.IN));
+		rollerButtonOut.whileHeld(new SetRollerCommand(Direction.OUT));
 	}
 }
 
