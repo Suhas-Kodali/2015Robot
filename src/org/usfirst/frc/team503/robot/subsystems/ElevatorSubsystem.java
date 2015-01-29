@@ -20,10 +20,9 @@ public class ElevatorSubsystem extends Subsystem implements PIDSource, PIDOutput
 	private final static double i = -0.000000, d = 0, p = -0.006;
     private final static PIDController controller = new PIDController(p, i, d, getInstance(), getInstance());
     private final static Encoder elevatorEncoder = new Encoder(0, 1);
-	
-	CANTalon frontLeftMotor = Drivetrain.getInstance().drive.frontLeftMotor;
-	CANTalon frontRightMotor = Drivetrain.getInstance().drive.frontRightMotor;
-	Solenoid elevatorSolenoid = new Solenoid(2);
+	private final CANTalon frontLeftMotor = Drivetrain.getInstance().drive.frontLeftMotor;
+	private final CANTalon frontRightMotor = Drivetrain.getInstance().drive.frontRightMotor;
+	private final Solenoid elevatorSolenoid = new Solenoid(2);
 	
     
     static {
@@ -37,7 +36,6 @@ public class ElevatorSubsystem extends Subsystem implements PIDSource, PIDOutput
 	public enum ElevatorSolenoidPosition{
         OPEN(true), CLOSE(false);
         private boolean position;
-
         private ElevatorSolenoidPosition(boolean position){
                 this.position = position;
         }

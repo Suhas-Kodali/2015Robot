@@ -5,6 +5,7 @@ import org.usfirst.frc.team503.robot.commands.SetElevatorSpeedCommand;
 import org.usfirst.frc.team503.robot.commands.TeleopDriveCommand;
 import org.usfirst.frc.team503.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team503.robot.subsystems.ElevatorSubsystem;
+import org.usfirst.frc.team503.robot.subsystems.GrabberSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -24,6 +25,7 @@ public class Robot extends IterativeRobot {
     	OI.init();
     	SmartDashboard.putData(Drivetrain.getInstance());
         SmartDashboard.putData(ElevatorSubsystem.getInstance());
+        SmartDashboard.putData(GrabberSubsystem.getInstance());
         
     }
 	
@@ -69,7 +71,4 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
-   
-
-//fuck it
-    }
+}
