@@ -1,7 +1,7 @@
 
 package org.usfirst.frc.team503.robot;
 
-import org.usfirst.frc.team503.robot.commands.SetElevatorSpeedCommand;
+import org.usfirst.frc.team503.robot.commands.ElevatorSpeedCommand;
 import org.usfirst.frc.team503.robot.commands.TeleopDriveCommand;
 import org.usfirst.frc.team503.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team503.robot.subsystems.ElevatorSubsystem;
@@ -47,7 +47,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
     	(new TeleopDriveCommand()).start();
-    	(new SetElevatorSpeedCommand()).start();
+    	(new ElevatorSpeedCommand()).start();
     }
 
     /**

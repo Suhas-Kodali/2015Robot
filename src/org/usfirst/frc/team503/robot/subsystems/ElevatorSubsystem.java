@@ -29,7 +29,7 @@ public class ElevatorSubsystem extends Subsystem implements PIDSource, PIDOutput
         //encoder.setDistancePerPulse(360/(ENCODER_CPR/*GEARBOX_RATIO*/*CHAIN_RATIO));
         elevatorEncoder.setMaxPeriod(1/*seconds*/);    
         controller.setOutputRange(-1, 1);
-        controller.setAbsoluteTolerance(16/*degrees, should be*/);
+        controller.setAbsoluteTolerance(16);
         //anglerMotor.setSafetyEnabled(false);
     }
     

@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class SetElevatorClawCommand extends Command {
-	ElevatorSubsystem instance = ElevatorSubsystem.getInstance();
 	ElevatorSolenoidPosition position;
 
     public SetElevatorClawCommand(ElevatorSolenoidPosition position) {
@@ -20,7 +19,7 @@ public class SetElevatorClawCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	instance.setSolenoidPosition(position);
+    	ElevatorSubsystem.getInstance().setSolenoidPosition(position);
     }
 
     // Called repeatedly when this Command is scheduled to run
