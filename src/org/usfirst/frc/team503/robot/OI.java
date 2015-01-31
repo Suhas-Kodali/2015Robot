@@ -11,7 +11,6 @@ import org.usfirst.frc.team503.robot.subsystems.RollerSubsystem.Direction;
 import org.usfirst.frc.team503.robot.subsystems.RollerSubsystem.RollerSolenoidPosition;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
