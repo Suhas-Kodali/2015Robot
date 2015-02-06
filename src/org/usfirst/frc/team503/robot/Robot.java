@@ -27,7 +27,6 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putData(Drivetrain.getInstance());
         SmartDashboard.putData(ElevatorSubsystem.getInstance());
         SmartDashboard.putData(GrabberSubsystem.getInstance());
-        
     }
 	
 	public void disabledPeriodic() {
