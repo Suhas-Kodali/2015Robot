@@ -8,21 +8,24 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ElevatorUpCommand extends Command {
+public class ElevatorGoToPosition extends Command {
 	
+	int position;
 
-    public ElevatorUpCommand() {
-    	
+    public ElevatorGoToPosition(int position) {
+    	this.position = position;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(OI.position < ElevatorSubsystem.getInstance().getPositions().length - 1){
-    		ElevatorSubsystem.getInstance().setSetpoint(ElevatorSubsystem.getInstance().getPositions()[OI.position++]);
+    	if(position > -1 && position < ElevatorSubsystem.getInstance().getPositions().length){
+    		ElevatorSubsystem.getInstance().setSetpoint(ElevatorSubsystem.getInstance().getPositions()[position]);
+    		ElevatorSubsystem.getInstance().pidEnable();
+    	}else{
+    		end();
     	}
-    	ElevatorSubsystem.getInstance().pidEnable();
     }
 
     // Called repeatedly when this Command is scheduled to run

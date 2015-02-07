@@ -34,7 +34,7 @@ public class Robot extends IterativeRobot {
 	}
 
     public void autonomousInit() {
-    	ElevatorSubsystem.getInstance().determinePosition();
+    	ElevatorSubsystem.getInstance().determinePosition();// make command
     }
 
     /**

@@ -44,7 +44,7 @@ public class OI {
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
-	public static int mode = 1;
+	public static int mode = 0;
 	
 	public static int position = 0;
 	
@@ -56,9 +56,9 @@ public class OI {
 			elevatorButtonClose = new JoystickButton(joystick, 2),
 			elevatorButtonMoveUp = new JoystickButton(joystick, 3),
 			elevatorButtonMoveDown = new JoystickButton(joystick, 4),
-			mode1Button = new JoystickButton(joystick, 5),
-			mode2Button = new JoystickButton(joystick, 6),
-			mode3Button = new JoystickButton(joystick, 7),
+			mode0Button = new JoystickButton(joystick, 5),
+			mode1Button = new JoystickButton(joystick, 6),
+			mode2Button = new JoystickButton(joystick, 7),
 			rollerButtonExtend = new JoystickButton(joystick, 8),
 			rollerButtonRetract = new JoystickButton(joystick, 9),
 			rollerButtonIn = new JoystickButton(joystick, 10),
@@ -90,9 +90,9 @@ public class OI {
 		elevatorButtonClose.whenPressed(new SetElevatorClawCommand(ElevatorSolenoidPosition.CLOSE));
 		elevatorButtonMoveUp.whenPressed(new ElevatorUpCommand());
 		elevatorButtonMoveDown.whenPressed(new ElevatorDownCommand());
+		mode0Button.whenPressed(new SetModeCommand(0));
 		mode1Button.whenPressed(new SetModeCommand(1));
 		mode2Button.whenPressed(new SetModeCommand(2));
-		mode3Button.whenPressed(new SetModeCommand(3));
 		rollerButtonExtend.whenPressed(new SetRollerSolenoidCommand(RollerSolenoidPosition.EXTEND));
 		rollerButtonRetract.whenPressed(new SetRollerSolenoidCommand(RollerSolenoidPosition.RETRACT));
 		rollerButtonIn.whileHeld(new SetRollerCommand(Direction.IN));

@@ -3,12 +3,12 @@ package org.usfirst.frc.team503.robot.subsystems;
 
 import org.usfirst.frc.team503.robot.OI;
 
-import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -26,10 +26,10 @@ PIDOutput {
 	private final PIDController controller = new PIDController(p, i, d,
 			getInstance(), getInstance());
     
-	public CustomRobotDrive drive = new CustomRobotDrive(6,9,7,8,4,10);
-	public Solenoid elevatorSolenoid = new Solenoid(0);
-	public Solenoid grabberSolenoid = new Solenoid(1);
-	private final Encoder drivetrainEncoder = new Encoder(2, 3);
+	public final CustomRobotDrive drive = new CustomRobotDrive(0,1,2,3,4,5);
+	public final DoubleSolenoid elevatorSolenoid = new DoubleSolenoid(0, 1);
+	public final DoubleSolenoid grabberSolenoid = new DoubleSolenoid(2, 3);
+	private final Encoder drivetrainEncoder = new Encoder(0, 1);
 	
 	private Drivetrain(){
 		drivetrainEncoder.setMaxPeriod(1 /* seconds */);
@@ -37,16 +37,25 @@ PIDOutput {
 		controller.setAbsoluteTolerance(16);
 	}
 	
+	public enum Direction{
+		Drivetrain(Value.kForward), Gamespec(Value.kReverse);
+		private Value value;
+		
+		private Direction(Value value){
+			this.value = value;
+		}
+	}
+	
 	public void arcadeDrive(double speedValue, double rotateValue, boolean squaredInputs, int mode){
 		drive.arcadeDrive(speedValue, rotateValue, squaredInputs, mode);
 	}
 	
-	public void setElevatorSolenoid(boolean position){
-		elevatorSolenoid.set(position);
+	public void setElevatorSolenoid(Direction position){
+		elevatorSolenoid.set(position.value);
 	}
 	
-	public void setGrabberSolenoid(boolean position){
-		grabberSolenoid.set(position);
+	public void setGrabberSolenoid(Direction position){
+		grabberSolenoid.set(position.value);
 	}
 	
 	public void setSetpoint(double distance){
@@ -59,7 +68,11 @@ PIDOutput {
 	public boolean isStopped() {
 		return drivetrainEncoder.getRate() < 3;
 	}
-
+	
+	public void pidReset(){
+		controller.reset();
+	}
+	
 	public void pidEnable() {
 		controller.enable();
 	}

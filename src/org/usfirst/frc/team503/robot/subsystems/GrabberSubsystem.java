@@ -37,7 +37,7 @@ public class GrabberSubsystem extends Subsystem {
 		return inSwitch.get();
 	}
 	
-	public void setSpeed(int speed) {
+	public void setSpeed(int speed) {//have it have a enum for "sixcimdrive, liftanddrive, grabanddrive, grabandlift" and switch with a method that takes that enum, and then have 3 different methods that attempt to output to either drivetrain, elev
 		if(OI.mode == 3){
 			midLeftMotor.set(speed);
 			midRightMotor.set(speed);

@@ -1,6 +1,5 @@
 package org.usfirst.frc.team503.robot.commands;
 
-import org.usfirst.frc.team503.robot.OI;
 import org.usfirst.frc.team503.robot.subsystems.ElevatorSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -8,21 +7,17 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ElevatorUpCommand extends Command {
+public class DeterminePositionCommand extends Command {
 	
 
-    public ElevatorUpCommand() {
-    	
+    public DeterminePositionCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(OI.position < ElevatorSubsystem.getInstance().getPositions().length - 1){
-    		ElevatorSubsystem.getInstance().setSetpoint(ElevatorSubsystem.getInstance().getPositions()[OI.position++]);
-    	}
-    	ElevatorSubsystem.getInstance().pidEnable();
+    	ElevatorSubsystem.getInstance().determinePosition();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -31,17 +26,15 @@ public class ElevatorUpCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (ElevatorSubsystem.getInstance().onTarget() && ElevatorSubsystem.getInstance().isStopped());
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	ElevatorSubsystem.getInstance().pidDisable();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }

@@ -64,18 +64,18 @@ public class CustomRobotDrive {
 			}
 		}
 
-		if (mode == 1) {
+		if (mode == 0) {
+			setModeZeroMotorOutputs(leftMotorSpeed, rightMotorSpeed);
+		} else if (mode == 1) {
 			setModeOneMotorOutputs(leftMotorSpeed, rightMotorSpeed);
 		} else if (mode == 2) {
 			setModeTwoMotorOutputs(leftMotorSpeed, rightMotorSpeed);
-		} else if (mode == 3) {
-			setModeThreeMotorOutputs(leftMotorSpeed, rightMotorSpeed);
 		} else {
-			setModeOneMotorOutputs(0, 0);
+			setModeZeroMotorOutputs(0, 0);
 		}
 	}
 
-	public void setModeOneMotorOutputs(double leftSpeed, double rightSpeed) {
+	public void setModeZeroMotorOutputs(double leftSpeed, double rightSpeed) {
 		frontLeftMotor.set(leftSpeed);
 		midLeftMotor.set(leftSpeed);
 		rearLeftMotor.set(leftSpeed);
@@ -84,14 +84,14 @@ public class CustomRobotDrive {
 		rearRightMotor.set(rightSpeed);
 	}
 
-	public void setModeTwoMotorOutputs(double leftSpeed, double rightSpeed) {
+	public void setModeOneMotorOutputs(double leftSpeed, double rightSpeed) {
 		midLeftMotor.set(leftSpeed);
 		rearLeftMotor.set(leftSpeed);
 		midRightMotor.set(rightSpeed);
 		rearRightMotor.set(rightSpeed);
 	}
 
-	public void setModeThreeMotorOutputs(double leftSpeed, double rightSpeed) {
+	public void setModeTwoMotorOutputs(double leftSpeed, double rightSpeed) {
 		frontLeftMotor.set(leftSpeed);
 		frontRightMotor.set(rightSpeed);
 	}
