@@ -12,6 +12,7 @@ import org.usfirst.frc.team503.robot.subsystems.RollerSubsystem.RollerSolenoidPo
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -44,11 +45,11 @@ public class OI {
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
-	public static int mode = 0;
+	public static int mode = 1;
 	
 	public static int position = 0;
 	
-	public static boolean squaredInputs = false;
+	public static boolean squaredInputs = true;
 	
 	static Joystick joystick = new Joystick(0);
 	
@@ -56,9 +57,9 @@ public class OI {
 			elevatorButtonClose = new JoystickButton(joystick, 2),
 			elevatorButtonMoveUp = new JoystickButton(joystick, 3),
 			elevatorButtonMoveDown = new JoystickButton(joystick, 4),
-			mode0Button = new JoystickButton(joystick, 5),
-			mode1Button = new JoystickButton(joystick, 6),
-			mode2Button = new JoystickButton(joystick, 7),
+			mode0Button = new JoystickButton(joystick, 7),
+			mode1Button = new JoystickButton(joystick, 5),
+			mode2Button = new JoystickButton(joystick, 6),
 			rollerButtonExtend = new JoystickButton(joystick, 8),
 			rollerButtonRetract = new JoystickButton(joystick, 9),
 			rollerButtonIn = new JoystickButton(joystick, 10),
@@ -66,15 +67,15 @@ public class OI {
 	
 	
 	public static double getJoystickY(){
-		return joystick.getRawAxis(5);
+		return joystick.getRawAxis(0);
 	}
 	
 	public static double getJoystickX(){
-		return joystick.getRawAxis(4);
+		return joystick.getRawAxis(1);
 	}
 	
 	public static double getElevatorInput(){
-		return joystick.getRawAxis(2);	
+		return joystick.getRawAxis(5);	
 	}
 	
 	public static boolean getRollerButtonIn(){

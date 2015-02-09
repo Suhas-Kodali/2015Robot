@@ -1,11 +1,9 @@
 package org.usfirst.frc.team503.robot.commands;
 
-import org.omg.PortableServer.ID_ASSIGNMENT_POLICY_ID;
 import org.usfirst.frc.team503.robot.OI;
 import org.usfirst.frc.team503.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team503.robot.subsystems.Drivetrain.Direction;
 
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -26,16 +24,16 @@ public class SetModeCommand extends Command {
     	if(mode == 0){
     		Drivetrain.getInstance().setElevatorSolenoid(Direction.Drivetrain);
     		Drivetrain.getInstance().setGrabberSolenoid(Direction.Drivetrain);
-    	}
-    	else if(mode == 1){
+    	}else if(mode == 1){
     		Drivetrain.getInstance().setElevatorSolenoid(Direction.Gamespec);
     		Drivetrain.getInstance().setGrabberSolenoid(Direction.Drivetrain);
-    	}
-    	else if(mode == 2){
+    	}else if(mode == 2){
     		Drivetrain.getInstance().setElevatorSolenoid(Direction.Drivetrain);
     		Drivetrain.getInstance().setGrabberSolenoid(Direction.Gamespec);
-    	}
-    	else {
+    	}else if(mode == 3){
+    		Drivetrain.getInstance().setElevatorSolenoid(Direction.Gamespec);
+    		Drivetrain.getInstance().setGrabberSolenoid(Direction.Gamespec);
+    	}else {
     		Drivetrain.getInstance().setElevatorSolenoid(Direction.Drivetrain);
     		Drivetrain.getInstance().setGrabberSolenoid(Direction.Drivetrain);
     	}

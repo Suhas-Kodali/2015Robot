@@ -2,13 +2,10 @@
 package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.robot.commands.ElevatorSpeedCommand;
+import org.usfirst.frc.team503.robot.commands.SetModeCommand;
 import org.usfirst.frc.team503.robot.commands.TeleopDriveCommand;
-import org.usfirst.frc.team503.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team503.robot.subsystems.ElevatorSubsystem;
-import org.usfirst.frc.team503.robot.subsystems.GrabberSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,9 +21,7 @@ public class Robot extends IterativeRobot {
 	
     public void robotInit() {
     	OI.init();
-    	SmartDashboard.putData(Drivetrain.getInstance());
-        SmartDashboard.putData(ElevatorSubsystem.getInstance());
-        SmartDashboard.putData(GrabberSubsystem.getInstance());
+        //Drivetrain.getInstance();
     }
 	
 	public void disabledPeriodic() {
@@ -34,7 +29,7 @@ public class Robot extends IterativeRobot {
 	}
 
     public void autonomousInit() {
-    	ElevatorSubsystem.getInstance().determinePosition();// make command
+    	//(new DeterminePositionCommand()).start();
     }
 
     /**
@@ -46,6 +41,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
+    	(new SetModeCommand(1)).start();
     	(new TeleopDriveCommand()).start();
     	(new ElevatorSpeedCommand()).start();
     }
@@ -62,6 +58,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	SmartDashboard.putNumber("Y", OI.getJoystickY());
+    	SmartDashboard.putNumber("X", OI.getJoystickX());
         Scheduler.getInstance().run();
     }
     

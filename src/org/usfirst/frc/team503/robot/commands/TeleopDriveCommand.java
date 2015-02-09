@@ -15,6 +15,7 @@ public class TeleopDriveCommand extends Command {
 	
 	
     public TeleopDriveCommand() {
+    	
     }
 
     // Called just before this Command runs the first time
@@ -23,7 +24,7 @@ public class TeleopDriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Drivetrain.getInstance().arcadeDrive(OI.getJoystickY(), OI.getJoystickX(), OI.squaredInputs, OI.mode);
+    	Drivetrain.getInstance().arcadeDrive(OI.getJoystickY(), OI.getJoystickX(), OI.squaredInputs);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -33,7 +34,7 @@ public class TeleopDriveCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Drivetrain.getInstance().arcadeDrive(0, 0, OI.squaredInputs, OI.mode);
+    	Drivetrain.getInstance().arcadeDrive(0, 0, OI.squaredInputs);
     }
 
     // Called when another command which requires one or more of the same

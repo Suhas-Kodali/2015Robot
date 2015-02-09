@@ -18,9 +18,9 @@ public class ElevatorDownCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	if(OI.position > 0){
-    		ElevatorSubsystem.getInstance().setSetpoint(ElevatorSubsystem.getInstance().getPositions()[OI.position--]);
+    		ElevatorSubsystem.setSetpoint(ElevatorSubsystem.getInstance().getPositions()[OI.position--]);
     	}
-    	ElevatorSubsystem.getInstance().pidEnable();
+    	ElevatorSubsystem.pidEnable();
     }
     
     // Called repeatedly when this Command is scheduled to run
@@ -29,12 +29,12 @@ public class ElevatorDownCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (ElevatorSubsystem.getInstance().onTarget() && ElevatorSubsystem.getInstance().isStopped());
+    	return (ElevatorSubsystem.onTarget() && ElevatorSubsystem.isStopped());
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	ElevatorSubsystem.getInstance().pidDisable();
+    	ElevatorSubsystem.pidDisable();
     }
 
     // Called when another command which requires one or more of the same

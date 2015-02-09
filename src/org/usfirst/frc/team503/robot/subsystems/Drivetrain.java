@@ -18,26 +18,31 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Drivetrain extends Subsystem implements PIDSource,
 PIDOutput { 
 	
+	private Drivetrain(){
+	}
 	private static Drivetrain instance = new Drivetrain();
 	public static Drivetrain getInstance(){
 		return instance;
 	}
-	private final double p = -0.006, i = 0, d = 0;
-	private final PIDController controller = new PIDController(p, i, d,
+	private static final double p = -0.006, i = 0, d = 0;
+	private static final PIDController controller = new PIDController(p, i, d,
 			getInstance(), getInstance());
     
-	public final CustomRobotDrive drive = new CustomRobotDrive(0,1,2,3,4,5);
-	public final DoubleSolenoid elevatorSolenoid = new DoubleSolenoid(0, 1);
-	public final DoubleSolenoid grabberSolenoid = new DoubleSolenoid(2, 3);
-	private final Encoder drivetrainEncoder = new Encoder(0, 1);
+	private static final CustomRobotDrive drive = CustomRobotDrive.getInstance();
+	private final DoubleSolenoid elevatorSolenoid = new DoubleSolenoid(2, 3);
+	private final DoubleSolenoid grabberSolenoid = new DoubleSolenoid(1, 0);
+	private static final Encoder drivetrainEncoder = new Encoder(0, 1);
+	public static final int direction = -1;
+	public static final int encoderDir = 1;
 	
-	private Drivetrain(){
+	static{
 		drivetrainEncoder.setMaxPeriod(1 /* seconds */);
 		controller.setOutputRange(-1, 1);
 		controller.setAbsoluteTolerance(16);
 	}
 	
-	public enum Direction{
+	
+	public static enum Direction{
 		Drivetrain(Value.kForward), Gamespec(Value.kReverse);
 		private Value value;
 		
@@ -46,8 +51,8 @@ PIDOutput {
 		}
 	}
 	
-	public void arcadeDrive(double speedValue, double rotateValue, boolean squaredInputs, int mode){
-		drive.arcadeDrive(speedValue, rotateValue, squaredInputs, mode);
+	public void arcadeDrive(double speedValue, double rotateValue, boolean squaredInputs){
+		drive.arcadeDrive(direction*speedValue, direction*rotateValue, squaredInputs);
 	}
 	
 	public void setElevatorSolenoid(Direction position){
@@ -58,26 +63,26 @@ PIDOutput {
 		grabberSolenoid.set(position.value);
 	}
 	
-	public void setSetpoint(double distance){
+	public static void setSetpoint(double distance){
 		controller.setSetpoint(distance);
 	}
-	public boolean onTarget() {
+	public static boolean onTarget() {
 		return controller.onTarget();
 	}
 
-	public boolean isStopped() {
+	public static boolean isStopped() {
 		return drivetrainEncoder.getRate() < 3;
 	}
 	
-	public void pidReset(){
+	public static void pidReset(){
 		controller.reset();
 	}
 	
-	public void pidEnable() {
+	public static void pidEnable() {
 		controller.enable();
 	}
 
-	public void pidDisable() {
+	public static void pidDisable() {
 		controller.disable();
 	}
 	
@@ -89,21 +94,16 @@ PIDOutput {
 	@Override
 	public void pidWrite(double speed) {
 		SmartDashboard.putNumber("PIDWRITE", speed);
-		if(controller.getError() > 50.0){
-			arcadeDrive(1, 0, OI.squaredInputs, OI.mode);
-		}
-		else if(controller.getError() <-50.0) {
-			arcadeDrive(-1, 0, OI.squaredInputs, OI.mode);
-		}
-		else{
-			arcadeDrive(speed, 0, OI.squaredInputs, OI.mode);			
-		}
+		arcadeDrive(speed, 0, OI.squaredInputs);			
+	}
+	
+	public static double getDistance(){
+		return drivetrainEncoder.getDistance();
 		
 	}
 	
-	public double getDistance(){
-		return drivetrainEncoder.getDistance();
-		
+	public static double getError(){
+		return controller.getError();
 	}
 	
 	@Override

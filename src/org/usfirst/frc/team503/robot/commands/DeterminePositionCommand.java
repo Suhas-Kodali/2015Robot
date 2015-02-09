@@ -17,7 +17,7 @@ public class DeterminePositionCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	ElevatorSubsystem.getInstance().determinePosition();
+    	ElevatorSubsystem.determinePosition();
     }
 
     // Called repeatedly when this Command is scheduled to run

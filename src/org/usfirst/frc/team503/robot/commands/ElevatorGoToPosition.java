@@ -1,6 +1,5 @@
 package org.usfirst.frc.team503.robot.commands;
 
-import org.usfirst.frc.team503.robot.OI;
 import org.usfirst.frc.team503.robot.subsystems.ElevatorSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -21,8 +20,8 @@ public class ElevatorGoToPosition extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	if(position > -1 && position < ElevatorSubsystem.getInstance().getPositions().length){
-    		ElevatorSubsystem.getInstance().setSetpoint(ElevatorSubsystem.getInstance().getPositions()[position]);
-    		ElevatorSubsystem.getInstance().pidEnable();
+    		ElevatorSubsystem.setSetpoint(ElevatorSubsystem.getInstance().getPositions()[position]);
+    		ElevatorSubsystem.pidEnable();
     	}else{
     		end();
     	}
@@ -34,12 +33,12 @@ public class ElevatorGoToPosition extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (ElevatorSubsystem.getInstance().onTarget() && ElevatorSubsystem.getInstance().isStopped());
+    	return (ElevatorSubsystem.onTarget() && ElevatorSubsystem.isStopped());
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	ElevatorSubsystem.getInstance().pidDisable();
+    	ElevatorSubsystem.pidDisable();
     }
 
     // Called when another command which requires one or more of the same

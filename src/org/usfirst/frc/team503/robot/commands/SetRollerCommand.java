@@ -4,7 +4,6 @@ import org.usfirst.frc.team503.robot.OI;
 import org.usfirst.frc.team503.robot.subsystems.RollerSubsystem;
 import org.usfirst.frc.team503.robot.subsystems.RollerSubsystem.Direction;
 
-import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**

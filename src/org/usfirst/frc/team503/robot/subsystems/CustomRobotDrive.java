@@ -1,16 +1,18 @@
 package org.usfirst.frc.team503.robot.subsystems;
 
+import org.usfirst.frc.team503.robot.OI;
+
 import edu.wpi.first.wpilibj.CANTalon;
 
 public class CustomRobotDrive {
-	CANTalon frontLeftMotor;
-	CANTalon midLeftMotor;
-	CANTalon rearLeftMotor;
-	CANTalon frontRightMotor;
-	CANTalon midRightMotor;
-	CANTalon rearRightMotor;
+	private CANTalon frontLeftMotor;
+	private CANTalon midLeftMotor;
+	private CANTalon rearLeftMotor;
+	private CANTalon frontRightMotor;
+	private CANTalon midRightMotor;
+	private CANTalon rearRightMotor;
 
-	public CustomRobotDrive(int frontLeftMotor, int midLeftMotor,
+	private CustomRobotDrive(int frontLeftMotor, int midLeftMotor,
 			int rearLeftMotor, int frontRightMotor, int midRightMotor,
 			int rearRightMotor) {
 		this.frontLeftMotor = new CANTalon(frontLeftMotor);
@@ -20,9 +22,14 @@ public class CustomRobotDrive {
 		this.midRightMotor = new CANTalon(midRightMotor);
 		this.rearRightMotor = new CANTalon(rearRightMotor);
 	}
+	private static CustomRobotDrive instance = new CustomRobotDrive(4,0,2,5,1,3);
+	
+	public static CustomRobotDrive getInstance(){
+		return instance;
+	}
 
 	public void arcadeDrive(double moveValue, double rotateValue,
-			boolean squaredInputs, int mode) {
+			boolean squaredInputs) {
 
 		double leftMotorSpeed;
 		double rightMotorSpeed;
@@ -64,18 +71,32 @@ public class CustomRobotDrive {
 			}
 		}
 
-		if (mode == 0) {
+		if (OI.mode == 0) {
 			setModeZeroMotorOutputs(leftMotorSpeed, rightMotorSpeed);
-		} else if (mode == 1) {
+		} else if (OI.mode == 1) {
 			setModeOneMotorOutputs(leftMotorSpeed, rightMotorSpeed);
-		} else if (mode == 2) {
+		} else if (OI.mode == 2) {
 			setModeTwoMotorOutputs(leftMotorSpeed, rightMotorSpeed);
-		} else {
-			setModeZeroMotorOutputs(0, 0);
+		}
+	}
+	
+	public void setElevatorSpeed(double speed){
+		if(OI.mode == 1 || OI.mode == 3){
+			frontLeftMotor.set(speed);
+			frontRightMotor.set(-speed);
+		}		
+	}
+	
+	public void setGrabberSpeed(double speed){
+		if(OI.mode == 2 || OI.mode == 3){
+			midLeftMotor.set(speed);
+			rearLeftMotor.set(speed);
+			midRightMotor.set(speed);
+			rearRightMotor.set(speed);
 		}
 	}
 
-	public void setModeZeroMotorOutputs(double leftSpeed, double rightSpeed) {
+	private void setModeZeroMotorOutputs(double leftSpeed, double rightSpeed) {
 		frontLeftMotor.set(leftSpeed);
 		midLeftMotor.set(leftSpeed);
 		rearLeftMotor.set(leftSpeed);
@@ -84,14 +105,14 @@ public class CustomRobotDrive {
 		rearRightMotor.set(rightSpeed);
 	}
 
-	public void setModeOneMotorOutputs(double leftSpeed, double rightSpeed) {
+	private void setModeOneMotorOutputs(double leftSpeed, double rightSpeed) {
 		midLeftMotor.set(leftSpeed);
 		rearLeftMotor.set(leftSpeed);
 		midRightMotor.set(rightSpeed);
 		rearRightMotor.set(rightSpeed);
 	}
 
-	public void setModeTwoMotorOutputs(double leftSpeed, double rightSpeed) {
+	private void setModeTwoMotorOutputs(double leftSpeed, double rightSpeed) {
 		frontLeftMotor.set(leftSpeed);
 		frontRightMotor.set(rightSpeed);
 	}
@@ -103,6 +124,10 @@ public class CustomRobotDrive {
 		
 		if (num < -1.0) {
 			return -1.0;
+		}
+		
+		if(num < 0.2 && num > -0.2){
+			return 0;
 		}
 		
 		return num;
