@@ -1,9 +1,10 @@
 package org.usfirst.frc.team503.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Relay.Value;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *:^)
@@ -15,23 +16,24 @@ public class RollerSubsystem extends Subsystem {
 	public static RollerSubsystem getInstance(){
 		return instance;
 	}
-	Solenoid rollerSolenoid = new Solenoid(2);
-	Relay rollerRelay = new Relay(0);
+	DoubleSolenoid rollerSolenoid = new DoubleSolenoid(4, 5);
+	Talon leftTalon = new Talon(1);
+	Talon rightTalon = new Talon(0);
 	
-	public enum Direction{
-		IN(Value.kForward), OUT(Value.kReverse), OFF(Value.kOff);
-		private Value value;
+	public static enum Direction{
+		IN(1), OUT(-1), OFF(0);
+		private int value;
 		
-		private Direction(Value value){
+		private Direction(int value){
 			this.value = value;
 		}
 	}
 	
-	public enum RollerSolenoidPosition{
-        EXTEND(true), RETRACT(false);
-        private boolean position;
+	public static enum RollerSolenoidPosition{
+        EXTEND(edu.wpi.first.wpilibj.DoubleSolenoid.Value.kForward), RETRACT(edu.wpi.first.wpilibj.DoubleSolenoid.Value.kReverse);
+        private edu.wpi.first.wpilibj.DoubleSolenoid.Value position;
 
-        private RollerSolenoidPosition(boolean position){
+        private RollerSolenoidPosition(edu.wpi.first.wpilibj.DoubleSolenoid.Value position){
                 this.position = position;
         }
 	}   
@@ -39,8 +41,10 @@ public class RollerSubsystem extends Subsystem {
 		rollerSolenoid.set(position.position);
 	}
 	
-	public void setRollerRelay(Direction direction){
-		rollerRelay.set(direction.value);		
+	public void setRollerTalon(Direction direction){
+		leftTalon.set(direction.value);		
+		rightTalon.set(-direction.value);	
+		SmartDashboard.putNumber("Speed", direction.value);
 	}
     
     // Put methods for controlling this subsystem

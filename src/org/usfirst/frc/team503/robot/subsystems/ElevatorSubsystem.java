@@ -24,7 +24,7 @@ public class ElevatorSubsystem extends Subsystem implements PIDSource,
 	private static final PIDController controller = new PIDController(p, i, d,
 			getInstance(), getInstance());
 	private static final Encoder elevatorEncoder = new Encoder(2, 3);
-	private final Solenoid elevatorSolenoid = new Solenoid(4);
+	private final Solenoid elevatorSolenoid = new Solenoid(6);
 
 	
 

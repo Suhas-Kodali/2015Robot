@@ -52,18 +52,20 @@ public class OI {
 	public static boolean squaredInputs = true;
 	
 	static Joystick joystick = new Joystick(0);
+	static Joystick leftJoystick = new Joystick(1);
+	static Joystick rightJoystick = new Joystick(2);
 	
-	static JoystickButton elevatorButtonOpen = new JoystickButton(joystick, 1),
-			elevatorButtonClose = new JoystickButton(joystick, 2),
-			elevatorButtonMoveUp = new JoystickButton(joystick, 3),
-			elevatorButtonMoveDown = new JoystickButton(joystick, 4),
+	static JoystickButton elevatorButtonOpen = new JoystickButton(joystick, 10),
+			elevatorButtonClose = new JoystickButton(joystick, 11),
+			elevatorButtonMoveUp = new JoystickButton(joystick, 8),
+			elevatorButtonMoveDown = new JoystickButton(joystick, 9),
 			mode0Button = new JoystickButton(joystick, 7),
 			mode1Button = new JoystickButton(joystick, 5),
 			mode2Button = new JoystickButton(joystick, 6),
-			rollerButtonExtend = new JoystickButton(joystick, 8),
-			rollerButtonRetract = new JoystickButton(joystick, 9),
-			rollerButtonIn = new JoystickButton(joystick, 10),
-			rollerButtonOut = new JoystickButton(joystick, 11);
+			rollerButtonExtend = new JoystickButton(joystick, 1),
+			rollerButtonRetract = new JoystickButton(joystick, 2),
+			rollerButtonIn = new JoystickButton(joystick, 3),
+			rollerButtonOut = new JoystickButton(joystick, 4);
 	
 	
 	public static double getJoystickY(){
@@ -96,8 +98,8 @@ public class OI {
 		mode2Button.whenPressed(new SetModeCommand(2));
 		rollerButtonExtend.whenPressed(new SetRollerSolenoidCommand(RollerSolenoidPosition.EXTEND));
 		rollerButtonRetract.whenPressed(new SetRollerSolenoidCommand(RollerSolenoidPosition.RETRACT));
-		rollerButtonIn.whileHeld(new SetRollerCommand(Direction.IN));
-		rollerButtonOut.whileHeld(new SetRollerCommand(Direction.OUT));
+		rollerButtonIn.whenPressed(new SetRollerCommand(Direction.IN));
+		rollerButtonOut.whenPressed(new SetRollerCommand(Direction.OUT));
 	}
 }
 

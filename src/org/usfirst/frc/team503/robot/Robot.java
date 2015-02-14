@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team503.robot;
 
+import org.usfirst.frc.team503.robot.commands.DriveForwardCommand;
 import org.usfirst.frc.team503.robot.commands.ElevatorSpeedCommand;
 import org.usfirst.frc.team503.robot.commands.SetModeCommand;
 import org.usfirst.frc.team503.robot.commands.TeleopDriveCommand;
@@ -18,10 +19,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	
     public void robotInit() {
     	OI.init();
-        //Drivetrain.getInstance();
     }
 	
 	public void disabledPeriodic() {
@@ -29,7 +28,7 @@ public class Robot extends IterativeRobot {
 	}
 
     public void autonomousInit() {
-    	//(new DeterminePositionCommand()).start();
+    	(new DriveForwardCommand(4)).start();
     }
 
     /**
