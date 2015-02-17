@@ -3,24 +3,31 @@ package org.usfirst.frc.team503.robot.subsystems;
 import org.usfirst.frc.team503.robot.OI;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CustomRobotDrive {
 	private CANTalon frontLeftMotor;
 	private CANTalon midLeftMotor;
-	private CANTalon rearLeftMotor;
+	private CANTalon backLeftMotor;
 	private CANTalon frontRightMotor;
 	private CANTalon midRightMotor;
-	private CANTalon rearRightMotor;
+	private CANTalon backRightMotor;
 
 	private CustomRobotDrive(int frontLeftMotor, int midLeftMotor,
 			int rearLeftMotor, int frontRightMotor, int midRightMotor,
 			int rearRightMotor) {
 		this.frontLeftMotor = new CANTalon(frontLeftMotor);
 		this.midLeftMotor = new CANTalon(midLeftMotor);
-		this.rearLeftMotor = new CANTalon(rearLeftMotor);
+		this.backLeftMotor = new CANTalon(rearLeftMotor);
 		this.frontRightMotor = new CANTalon(frontRightMotor);
 		this.midRightMotor = new CANTalon(midRightMotor);
-		this.rearRightMotor = new CANTalon(rearRightMotor);
+		this.backRightMotor = new CANTalon(rearRightMotor);
+		this.frontLeftMotor.enableBrakeMode(false);
+		this.midLeftMotor.enableBrakeMode(false);
+		this.backLeftMotor.enableBrakeMode(false);
+		this.frontRightMotor.enableBrakeMode(false);
+		this.midRightMotor.enableBrakeMode(false);
+		this.backRightMotor.enableBrakeMode(false);
 	}
 	private static CustomRobotDrive instance = new CustomRobotDrive(4,0,2,5,1,3);
 	
@@ -70,6 +77,13 @@ public class CustomRobotDrive {
 				rightMotorSpeed = -Math.max(-moveValue, -rotateValue);
 			}
 		}
+		
+		SmartDashboard.putNumber("frontLeftMotor", frontLeftMotor.get());
+		SmartDashboard.putNumber("midLeftMotor", midLeftMotor.get());
+		SmartDashboard.putNumber("backLeftMotor", backLeftMotor.get());
+		SmartDashboard.putNumber("frontRightMotor", frontRightMotor.get());
+		SmartDashboard.putNumber("midRightMotor", midRightMotor.get());
+		SmartDashboard.putNumber("backRightMotor", backRightMotor.get());
 
 		if (OI.mode == 0) {
 			setModeZeroMotorOutputs(leftMotorSpeed, rightMotorSpeed);
@@ -82,38 +96,40 @@ public class CustomRobotDrive {
 	
 	public void setElevatorSpeed(double speed){
 		if(OI.mode == 1 || OI.mode == 3){
-			frontLeftMotor.set(speed);
-			frontRightMotor.set(-speed);
+			speed = limit(speed);
+			frontLeftMotor.set(-speed);
+			frontRightMotor.set(speed);
 		}		
 	}
 	
 	public void setGrabberSpeed(double speed){
 		if(OI.mode == 2 || OI.mode == 3){
-			midLeftMotor.set(speed);
-			rearLeftMotor.set(speed);
+			speed = limit(speed);
+			midLeftMotor.set(-speed);
+			backLeftMotor.set(-speed);
 			midRightMotor.set(speed);
-			rearRightMotor.set(speed);
+			backRightMotor.set(speed);
 		}
 	}
 
 	private void setModeZeroMotorOutputs(double leftSpeed, double rightSpeed) {
-		frontLeftMotor.set(leftSpeed);
-		midLeftMotor.set(leftSpeed);
-		rearLeftMotor.set(leftSpeed);
+		frontLeftMotor.set(-leftSpeed);
+		midLeftMotor.set(-leftSpeed);
+		backLeftMotor.set(-leftSpeed);
 		frontRightMotor.set(rightSpeed);
 		midRightMotor.set(rightSpeed);
-		rearRightMotor.set(rightSpeed);
+		backRightMotor.set(rightSpeed);
 	}
 
 	private void setModeOneMotorOutputs(double leftSpeed, double rightSpeed) {
-		midLeftMotor.set(leftSpeed);
-		rearLeftMotor.set(leftSpeed);
+		midLeftMotor.set(-leftSpeed);
+		backLeftMotor.set(-leftSpeed);
 		midRightMotor.set(rightSpeed);
-		rearRightMotor.set(rightSpeed);
+		backRightMotor.set(rightSpeed);
 	}
 
 	private void setModeTwoMotorOutputs(double leftSpeed, double rightSpeed) {
-		frontLeftMotor.set(leftSpeed);
+		frontLeftMotor.set(-leftSpeed);
 		frontRightMotor.set(rightSpeed);
 	}
 

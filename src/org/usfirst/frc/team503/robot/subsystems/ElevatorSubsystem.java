@@ -2,6 +2,7 @@ package org.usfirst.frc.team503.robot.subsystems;
 
 import org.usfirst.frc.team503.robot.OI;
 
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -20,13 +21,19 @@ public class ElevatorSubsystem extends Subsystem implements PIDSource,
 		return instance;
 	}
 
-	private static final double p = -0.006, i = 0, d = 0;
+	private static final double p = 0.001, i = 0.00001, d = 0; // why is p negative
 	private static final PIDController controller = new PIDController(p, i, d,
 			getInstance(), getInstance());
-	private static final Encoder elevatorEncoder = new Encoder(2, 3);
+	private static final Encoder elevatorEncoder = new Encoder(0, 1, true, EncodingType.k4X);
 	private final Solenoid elevatorSolenoid = new Solenoid(6);
 
-	
+	static{
+		elevatorEncoder.setDistancePerPulse(.0245);
+		elevatorEncoder.setMaxPeriod(1 /* seconds */);
+		elevatorEncoder.reset();
+		controller.setOutputRange(-1, 1);
+		controller.setAbsoluteTolerance(2);
+	}
 
 	
 	
@@ -40,10 +47,10 @@ public class ElevatorSubsystem extends Subsystem implements PIDSource,
 	}
 
 	public static enum ElevatorPosition {
-		TOP(800), SECOND(600), THIRD(400), FOURTH(200), BOTTOM(0);
-		private int position;
+		TOP(62), SECOND(46.5), THIRD(31), FOURTH(15.5), BOTTOM(0);
+		private double position;
 
-		private ElevatorPosition(int position) {
+		private ElevatorPosition(double position) {
 			this.position = position;
 		}
 	}
@@ -108,6 +115,10 @@ public class ElevatorSubsystem extends Subsystem implements PIDSource,
 	public static boolean isStopped() {
 		return elevatorEncoder.getRate() < 3;
 	}
+	
+	public static double getError(){
+		return controller.getError();
+	}
 
 	public static void pidEnable() {
 		controller.enable();
@@ -115,6 +126,14 @@ public class ElevatorSubsystem extends Subsystem implements PIDSource,
 
 	public static void pidDisable() {
 		controller.disable();
+	}
+	
+	public static double getRate(){
+		return elevatorEncoder.getRate();
+	}
+	
+	public static double getPIDLastOutput(){
+		return controller.get();
 	}
 
 	// Put methods for controlling this subsystem

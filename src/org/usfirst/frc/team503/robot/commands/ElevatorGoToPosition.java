@@ -1,8 +1,11 @@
 package org.usfirst.frc.team503.robot.commands;
 
+import org.usfirst.frc.team503.robot.OI;
+import org.usfirst.frc.team503.robot.subsystems.CustomRobotDrive;
 import org.usfirst.frc.team503.robot.subsystems.ElevatorSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -10,9 +13,11 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ElevatorGoToPosition extends Command {
 	
 	int position;
+	int positionsRunning;
 
     public ElevatorGoToPosition(int position) {
     	this.position = position;
+    	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -20,6 +25,8 @@ public class ElevatorGoToPosition extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	if(position > -1 && position < ElevatorSubsystem.getInstance().getPositions().length){
+    		OI.positionCommandsRan++;
+    		positionsRunning = OI.positionCommandsRan;
     		ElevatorSubsystem.setSetpoint(ElevatorSubsystem.getInstance().getPositions()[position]);
     		ElevatorSubsystem.pidEnable();
     	}else{
@@ -29,16 +36,30 @@ public class ElevatorGoToPosition extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	double error = ElevatorSubsystem.getError();
+    	SmartDashboard.putNumber("Elevator dte:", error);
+    	if(Math.abs(error) > Math.min(Math.abs(ElevatorSubsystem.getRate()*3), 2)){ //rate*3 is usually a lot higher than 5
+    		SmartDashboard.putBoolean("Elevator", true);
+    		CustomRobotDrive.getInstance().setElevatorSpeed(error > 0 ? 0.75 : -0.75); 
+    	}else{
+    		SmartDashboard.putBoolean("Elevator", false);
+    		CustomRobotDrive.getInstance().setElevatorSpeed(ElevatorSubsystem.getPIDLastOutput());
+    	}
+    	SmartDashboard.putBoolean("Elevator END", false);
+    	if((ElevatorSubsystem.onTarget() && ElevatorSubsystem.isStopped())){
+    		SmartDashboard.putBoolean("Elevator END", true);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (ElevatorSubsystem.onTarget() && ElevatorSubsystem.isStopped());
+    	return OI.positionCommandsRan > positionsRunning;
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	ElevatorSubsystem.pidDisable();
+    	ElevatorSubsystem.getInstance().setSpeed(0);    	
     }
 
     // Called when another command which requires one or more of the same

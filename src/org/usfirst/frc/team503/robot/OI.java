@@ -45,20 +45,24 @@ public class OI {
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
-	public static int mode = 1;
+	public static int mode = 0;
 	
 	public static int position = 0;
 	
-	public static boolean squaredInputs = true;
+	public static int positionCommandsRan = 0;
+	
+	public static boolean squaredInputs = false;
+	
+	private final static double DRIVE_SENSITIVITY = .5;
 	
 	static Joystick joystick = new Joystick(0);
 	static Joystick leftJoystick = new Joystick(1);
 	static Joystick rightJoystick = new Joystick(2);
 	
-	static JoystickButton elevatorButtonOpen = new JoystickButton(joystick, 10),
-			elevatorButtonClose = new JoystickButton(joystick, 11),
+	static JoystickButton elevatorButtonOpen = new JoystickButton(joystick, 9),
+			elevatorButtonClose = new JoystickButton(joystick, 10),
 			elevatorButtonMoveUp = new JoystickButton(joystick, 8),
-			elevatorButtonMoveDown = new JoystickButton(joystick, 9),
+			elevatorButtonMoveDown = new JoystickButton(joystick, 11),
 			mode0Button = new JoystickButton(joystick, 7),
 			mode1Button = new JoystickButton(joystick, 5),
 			mode2Button = new JoystickButton(joystick, 6),
@@ -67,26 +71,44 @@ public class OI {
 			rollerButtonIn = new JoystickButton(joystick, 3),
 			rollerButtonOut = new JoystickButton(joystick, 4);
 	
-	
 	public static double getJoystickY(){
-		return joystick.getRawAxis(0);
+		return scale(-joystick.getRawAxis(1), DRIVE_SENSITIVITY);
+		//return scale(-leftJoystick.getY(), DRIVE_SENSITIVITY);
 	}
 	
 	public static double getJoystickX(){
-		return joystick.getRawAxis(1);
+		return scale(joystick.getRawAxis(0), DRIVE_SENSITIVITY);
+		//return scale(leftJoystick.getX(), DRIVE_SENSITIVITY);
 	}
 	
 	public static double getElevatorInput(){
-		return joystick.getRawAxis(5);	
+		return -joystick.getRawAxis(5);	
+	}
+	
+	public static double getStealerInput(){
+		return -joystick.getRawAxis(1);
 	}
 	
 	public static boolean getRollerButtonIn(){
 		return rollerButtonIn.get();
 	}
 	
+	
 	public static boolean getRollerButtonOut(){
 		return rollerButtonOut.get();
 	}
+	
+	public static double getLassoInput(){
+		if(joystick.getRawAxis(2) > joystick.getRawAxis(3)){
+			return -joystick.getRawAxis(2);
+		}else{
+			return joystick.getRawAxis(3);
+		}
+	}
+	
+	public static double scale(double input, double sensitivity){
+        return sensitivity * (input*input*input) + (1-sensitivity) * input;
+    }
 	
 	public static void init(){
 		elevatorButtonOpen.whenPressed(new SetElevatorClawCommand(ElevatorSolenoidPosition.OPEN));

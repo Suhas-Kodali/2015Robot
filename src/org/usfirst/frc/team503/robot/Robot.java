@@ -1,10 +1,15 @@
 
 package org.usfirst.frc.team503.robot;
 
-import org.usfirst.frc.team503.robot.commands.DriveForwardCommand;
+import org.usfirst.frc.team503.robot.commands.DeterminePositionCommand;
+import org.usfirst.frc.team503.robot.commands.ElevatorGoToPosition;
 import org.usfirst.frc.team503.robot.commands.ElevatorSpeedCommand;
 import org.usfirst.frc.team503.robot.commands.SetModeCommand;
 import org.usfirst.frc.team503.robot.commands.TeleopDriveCommand;
+import org.usfirst.frc.team503.robot.subsystems.CustomRobotDrive;
+import org.usfirst.frc.team503.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team503.robot.subsystems.ElevatorSubsystem;
+import org.usfirst.frc.team503.robot.subsystems.GrabberSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -26,9 +31,12 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 	}
-
+	
     public void autonomousInit() {
-    	(new DriveForwardCommand(4)).start();
+    	(new SetModeCommand(1)).start();
+    	(new DeterminePositionCommand()).start();
+    	(new ElevatorGoToPosition(2)).start();
+    	//(new DriveStraightCommand(10)).start();
     }
 
     /**
@@ -36,11 +44,14 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-    
+    	SmartDashboard.putNumber("Error", Drivetrain.getError());
+    	SmartDashboard.putNumber("Drivetrain Encoder", Drivetrain.getDistance());
+    	SmartDashboard.putNumber("Elevator Enc", ElevatorSubsystem.getDistance());    
     }
 
     public void teleopInit() {
     	(new SetModeCommand(1)).start();
+    	(new DeterminePositionCommand()).start();
     	(new TeleopDriveCommand()).start();
     	(new ElevatorSpeedCommand()).start();
     }
@@ -57,9 +68,14 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	SmartDashboard.putNumber("Drivetrain Encoder", Drivetrain.getDistance());
+    	SmartDashboard.putNumber("Elevator Enc", ElevatorSubsystem.getDistance());
+    	SmartDashboard.putNumber("Encoder Rate", Drivetrain.getRate());
     	SmartDashboard.putNumber("Y", OI.getJoystickY());
     	SmartDashboard.putNumber("X", OI.getJoystickX());
         Scheduler.getInstance().run();
+        CustomRobotDrive.getInstance().setGrabberSpeed(OI.getStealerInput());
+        GrabberSubsystem.getInstance().setLassoSpeed(OI.getLassoInput());
     }
     
     /**

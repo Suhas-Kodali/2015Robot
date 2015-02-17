@@ -1,8 +1,10 @@
 package org.usfirst.frc.team503.robot.commands;
 
+import org.usfirst.frc.team503.robot.OI;
 import org.usfirst.frc.team503.robot.subsystems.ElevatorSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -18,6 +20,7 @@ public class DeterminePositionCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	ElevatorSubsystem.determinePosition();
+    	SmartDashboard.putNumber("position", OI.position);
     }
 
     // Called repeatedly when this Command is scheduled to run
