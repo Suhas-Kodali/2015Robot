@@ -2,10 +2,12 @@
 package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.robot.commands.DeterminePositionCommand;
+import org.usfirst.frc.team503.robot.commands.DriveStraightCommand;
 import org.usfirst.frc.team503.robot.commands.ElevatorGoToPosition;
 import org.usfirst.frc.team503.robot.commands.ElevatorSpeedCommand;
 import org.usfirst.frc.team503.robot.commands.SetModeCommand;
 import org.usfirst.frc.team503.robot.commands.TeleopDriveCommand;
+import org.usfirst.frc.team503.robot.commands.TestCommandGroup;
 import org.usfirst.frc.team503.robot.subsystems.CustomRobotDrive;
 import org.usfirst.frc.team503.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team503.robot.subsystems.ElevatorSubsystem;
@@ -35,8 +37,9 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
     	(new SetModeCommand(1)).start();
     	(new DeterminePositionCommand()).start();
-    	(new ElevatorGoToPosition(2)).start();
-    	//(new DriveStraightCommand(10)).start();
+    	//(new ElevatorGoToPosition(2)).start();
+    	//(new DriveStraightCommand(50)).start();
+    	(new TestCommandGroup()).start();
     }
 
     /**

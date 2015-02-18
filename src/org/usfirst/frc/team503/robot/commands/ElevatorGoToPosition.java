@@ -14,6 +14,7 @@ public class ElevatorGoToPosition extends Command {
 	
 	int position;
 	int positionsRunning;
+	int penisSize;
 
     public ElevatorGoToPosition(int position) {
     	this.position = position;
@@ -38,12 +39,19 @@ public class ElevatorGoToPosition extends Command {
     protected void execute() {
     	double error = ElevatorSubsystem.getError();
     	SmartDashboard.putNumber("Elevator dte:", error);
-    	if(Math.abs(error) > Math.min(Math.abs(ElevatorSubsystem.getRate()*3), 2)){ //rate*3 is usually a lot higher than 5
-    		SmartDashboard.putBoolean("Elevator", true);
-    		CustomRobotDrive.getInstance().setElevatorSpeed(error > 0 ? 0.75 : -0.75); 
+    	if(Math.abs(error) > 1){
+    		if(ElevatorSubsystem.getDistance() < 0 && position == 0){
+    			CustomRobotDrive.getInstance().setElevatorSpeed(0); 
+    		}
+    		else if(Math.abs(error) > Math.min(Math.abs(ElevatorSubsystem.getRate()*3), 5)){ //rate*3 is usually a lot higher than 5
+    			SmartDashboard.putBoolean("Elevator", true);
+    			CustomRobotDrive.getInstance().setElevatorSpeed(error > 0 ? 0.75 : -0.75); 
+    		}else{
+    			SmartDashboard.putBoolean("Elevator", false);
+    			CustomRobotDrive.getInstance().setElevatorSpeed(ElevatorSubsystem.getPIDLastOutput());
+    		}
     	}else{
-    		SmartDashboard.putBoolean("Elevator", false);
-    		CustomRobotDrive.getInstance().setElevatorSpeed(ElevatorSubsystem.getPIDLastOutput());
+    		CustomRobotDrive.getInstance().setElevatorSpeed(0);
     	}
     	SmartDashboard.putBoolean("Elevator END", false);
     	if((ElevatorSubsystem.onTarget() && ElevatorSubsystem.isStopped())){
@@ -55,7 +63,6 @@ public class ElevatorGoToPosition extends Command {
     protected boolean isFinished() {
     	return OI.positionCommandsRan > positionsRunning;
     }
-
     // Called once after isFinished returns true
     protected void end() {
     	ElevatorSubsystem.pidDisable();

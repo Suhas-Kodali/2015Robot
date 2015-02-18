@@ -29,12 +29,16 @@ public class DriveStraightCommand extends Command {
     protected void execute() {
     	double error = Drivetrain.getError();
     	SmartDashboard.putNumber("dte:", error);
-    	if(Math.abs(error) > Math.min(Math.abs(Drivetrain.getRate()*3), 18)){
+    	if(Math.abs(error) > 5){
+    	if(Math.abs(error) > Math.min(Math.abs(Drivetrain.getRate()*3), 8)){
     		SmartDashboard.putBoolean("DriveStraight", true);
-    		Drivetrain.getInstance().arcadeDrive(error > 0 ? 0.5 : -0.5, 0, false); 
+    		Drivetrain.getInstance().arcadeDrive(error > 0 ? 0.3 : -0.3, 0, false); 
     	}else{
     		SmartDashboard.putBoolean("DriveStraight", false);
     		Drivetrain.getInstance().arcadeDrive(Drivetrain.getPIDLastOutput(), 0, false);
+    	}
+    	}else{
+    		Drivetrain.getInstance().arcadeDrive(0, 0, false); 
     	}
     	SmartDashboard.putBoolean("END", false);
     	if((Drivetrain.onTarget() && Drivetrain.isStopped())){

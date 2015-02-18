@@ -25,7 +25,7 @@ PIDOutput {
 	public static Drivetrain getInstance(){
 		return instance;
 	}
-	private static final double p = .00625, i = 0, d = 0;
+	private static final double p = .06, i = 0, d = 0;
 	private static final PIDController controller = new PIDController(p, i, d,
 			getInstance(), getInstance());
     
@@ -40,7 +40,7 @@ PIDOutput {
 		drivetrainEncoder.setMaxPeriod(1 /* seconds */);
 		drivetrainEncoder.reset();
 		controller.setOutputRange(-1, 1);
-		controller.setAbsoluteTolerance(3);
+		controller.setAbsoluteTolerance(6);
 	}
 	
 	

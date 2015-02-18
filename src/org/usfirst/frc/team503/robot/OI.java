@@ -54,6 +54,7 @@ public class OI {
 	public static boolean squaredInputs = false;
 	
 	private final static double DRIVE_SENSITIVITY = .5;
+	private final static double TURN_SENSITIVITY = .1;
 	
 	static Joystick joystick = new Joystick(0);
 	static Joystick leftJoystick = new Joystick(1);
@@ -73,11 +74,11 @@ public class OI {
 	
 	public static double getJoystickY(){
 		return scale(-joystick.getRawAxis(1), DRIVE_SENSITIVITY);
-		//return scale(-leftJoystick.getY(), DRIVE_SENSITIVITY);
+		//return scale(-leftJoystick.getY(), DRIVE_SENSITIVITY); 
 	}
 	
 	public static double getJoystickX(){
-		return scale(joystick.getRawAxis(0), DRIVE_SENSITIVITY);
+		return scale(joystick.getRawAxis(0), TURN_SENSITIVITY);
 		//return scale(leftJoystick.getX(), DRIVE_SENSITIVITY);
 	}
 	

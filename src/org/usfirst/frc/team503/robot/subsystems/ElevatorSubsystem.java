@@ -21,7 +21,7 @@ public class ElevatorSubsystem extends Subsystem implements PIDSource,
 		return instance;
 	}
 
-	private static final double p = 0.001, i = 0.00001, d = 0; // why is p negative
+	private static final double p = 0.05, i = 0, d = 0; // why is p negative
 	private static final PIDController controller = new PIDController(p, i, d,
 			getInstance(), getInstance());
 	private static final Encoder elevatorEncoder = new Encoder(0, 1, true, EncodingType.k4X);
