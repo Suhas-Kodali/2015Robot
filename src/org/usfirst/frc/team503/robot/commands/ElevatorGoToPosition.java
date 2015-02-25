@@ -39,24 +39,17 @@ public class ElevatorGoToPosition extends Command {
     protected void execute() {
     	double error = ElevatorSubsystem.getError();
     	SmartDashboard.putNumber("Elevator dte:", error);
-    	if(Math.abs(error) > 1){
-    		if(ElevatorSubsystem.getDistance() < 0 && position == 0){
-    			CustomRobotDrive.getInstance().setElevatorSpeed(0); 
-    		}
-    		else if(Math.abs(error) > Math.min(Math.abs(ElevatorSubsystem.getRate()*3), 5)){ //rate*3 is usually a lot higher than 5
-    			SmartDashboard.putBoolean("Elevator", true);
-    			CustomRobotDrive.getInstance().setElevatorSpeed(error > 0 ? 0.75 : -0.75); 
+    		if(Math.abs(error) >  2){ //rate*3 is usually a lot higher than 5
+    			CustomRobotDrive.getInstance().setElevatorSpeed(error > 0 ? 0.5 : -0.5); 
+    			SmartDashboard.putNumber("ElevatorSpeed", error > 0 ? 0.5 : -0.5);
     		}else{
-    			SmartDashboard.putBoolean("Elevator", false);
     			CustomRobotDrive.getInstance().setElevatorSpeed(ElevatorSubsystem.getPIDLastOutput());
+    			SmartDashboard.putNumber("getPIDLastOutput", ElevatorSubsystem.getPIDLastOutput());
     		}
-    	}else{
-    		CustomRobotDrive.getInstance().setElevatorSpeed(0);
-    	}
-    	SmartDashboard.putBoolean("Elevator END", false);
-    	if((ElevatorSubsystem.onTarget() && ElevatorSubsystem.isStopped())){
-    		SmartDashboard.putBoolean("Elevator END", true);
-    	}
+    		if(OI.positionCommandsRan > positionsRunning){
+    			SmartDashboard.putBoolean("ELEVATOR END", true);
+    		}
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -65,8 +58,8 @@ public class ElevatorGoToPosition extends Command {
     }
     // Called once after isFinished returns true
     protected void end() {
-    	ElevatorSubsystem.pidDisable();
-    	ElevatorSubsystem.getInstance().setSpeed(0);    	
+    	//ElevatorSubsystem.pidDisable();
+    	//ElevatorSubsystem.getInstance().setSpeed(0);
     }
 
     // Called when another command which requires one or more of the same

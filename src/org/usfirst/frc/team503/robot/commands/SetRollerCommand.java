@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class SetRollerCommand extends Command {
-	RollerSubsystem instance = RollerSubsystem.getInstance();
 	Direction direction;
 
     public SetRollerCommand(Direction direction) {

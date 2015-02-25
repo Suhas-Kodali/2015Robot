@@ -47,6 +47,14 @@ public class RollerSubsystem extends Subsystem {
 		SmartDashboard.putNumber("Speed", direction.value);
 	}
     
+	public void setSingleTalon(boolean right, Direction direction){
+		if(right){
+			rightTalon.set(-direction.value);
+		}else{
+			leftTalon.set(direction.value);
+		}
+	}
+	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 

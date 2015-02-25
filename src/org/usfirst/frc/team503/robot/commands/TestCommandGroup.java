@@ -25,15 +25,15 @@ public class TestCommandGroup extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new ElevatorGoToPosition(1));
-    	addSequential(new WaitCommand(1));
-    	addSequential(new DriveStraightCommand(30));
+    	addParallel(new ElevatorGoToPosition(2));
+    	addSequential(new WaitCommand(1.8));
+    	addSequential(new DriveStraightCommand(26));
     	addParallel(new ElevatorGoToPosition(0));
     	addSequential(new WaitCommand(3));
     	addParallel(new ElevatorGoToPosition(1));
     	addSequential(new WaitCommand(1));
-    	addSequential(new DriveStraightCommand(50));
-    	
+    	addSequential(new Turn90Command(1.8));
+    	addSequential(new DriveStraightCommand(108));
     	
     }
 }

@@ -1,57 +1,46 @@
 package org.usfirst.frc.team503.robot.commands;
 
-import org.usfirst.frc.team503.robot.OI;
 import org.usfirst.frc.team503.robot.subsystems.Drivetrain;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class DriveStraightCommand extends Command {
-	double distance;
+public class Turn90Command extends Command {
+	double time;
+	Timer timer = new Timer();
 
-    public DriveStraightCommand(double inches) {
-    	this.distance = inches;
-    	
+    public Turn90Command(double time) {
+    	this.time = time;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Drivetrain.setSetpoint(distance);
-    	Drivetrain.pidEnable();
+    	timer.start();
+    	Drivetrain.getInstance().arcadeDrive(0, -0.3, false);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double error = Drivetrain.getError();
     	
-    	if(Math.abs(error) > 8){
-    		SmartDashboard.putBoolean("DriveStraight", true);
-    		Drivetrain.getInstance().arcadeDrive(error > 0 ? 0.3 : -0.3, 0, false); 
-    	}else{
-    		SmartDashboard.putBoolean("DriveStraight", false);
-    		Drivetrain.getInstance().arcadeDrive(Drivetrain.getPIDLastOutput(), 0, false);
-    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (Drivetrain.onTarget() && Drivetrain.isStopped());
+        return timer.get()>time;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Drivetrain.pidDisable();
     	Drivetrain.getInstance().arcadeDrive(0, 0, false);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }

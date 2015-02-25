@@ -29,7 +29,7 @@ public class CustomRobotDrive {
 		this.midRightMotor.enableBrakeMode(false);
 		this.backRightMotor.enableBrakeMode(false);
 	}
-	private static CustomRobotDrive instance = new CustomRobotDrive(4,0,2,5,1,3);
+	private static CustomRobotDrive instance = new CustomRobotDrive(4,0,2,5,1,3);//new CustomRobotDrive(4,5,1,3,2,0)
 	
 	public static CustomRobotDrive getInstance(){
 		return instance;
@@ -91,6 +91,16 @@ public class CustomRobotDrive {
 			setModeOneMotorOutputs(leftMotorSpeed, rightMotorSpeed);
 		} else if (OI.mode == 2) {
 			setModeTwoMotorOutputs(leftMotorSpeed, rightMotorSpeed);
+		}
+	}
+	
+	public void tankDrive(double leftSpeed, double rightSpeed){
+		if (OI.mode == 0) {
+			setModeZeroMotorOutputs(leftSpeed, rightSpeed);
+		} else if (OI.mode == 1) {
+			setModeOneMotorOutputs(leftSpeed, rightSpeed);
+		} else if (OI.mode == 2) {
+			setModeTwoMotorOutputs(leftSpeed, rightSpeed);
 		}
 	}
 	

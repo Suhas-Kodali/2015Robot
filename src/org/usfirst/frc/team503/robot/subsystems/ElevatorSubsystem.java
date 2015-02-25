@@ -21,7 +21,7 @@ public class ElevatorSubsystem extends Subsystem implements PIDSource,
 		return instance;
 	}
 
-	private static final double p = 0.05, i = 0, d = 0; // why is p negative
+	private static final double p = 0.1, i = 0.00005, d = 0; // why is p negative
 	private static final PIDController controller = new PIDController(p, i, d,
 			getInstance(), getInstance());
 	private static final Encoder elevatorEncoder = new Encoder(0, 1, true, EncodingType.k4X);
@@ -32,7 +32,7 @@ public class ElevatorSubsystem extends Subsystem implements PIDSource,
 		elevatorEncoder.setMaxPeriod(1 /* seconds */);
 		elevatorEncoder.reset();
 		controller.setOutputRange(-1, 1);
-		controller.setAbsoluteTolerance(2);
+		controller.setAbsoluteTolerance(0.5);
 	}
 
 	
@@ -95,7 +95,6 @@ public class ElevatorSubsystem extends Subsystem implements PIDSource,
 	@Override
 	public void pidWrite(double speed) {
 		SmartDashboard.putNumber("PIDWRITE", speed);
-		setSpeed(speed);
 	}
 
 	@Override

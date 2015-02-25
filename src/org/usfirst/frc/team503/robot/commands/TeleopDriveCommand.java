@@ -24,7 +24,8 @@ public class TeleopDriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Drivetrain.getInstance().arcadeDrive(OI.getJoystickY(), OI.getJoystickX(), OI.squaredInputs);
+    	//Drivetrain.getInstance().arcadeDrive(OI.getJoystickY(), OI.getJoystickX(), OI.squaredInputs);
+    	Drivetrain.getInstance().arcadeDrive(OI.getJoystickY(), OI.getJoystickX(), OI.squaredInputs);;
     }
 
     // Make this return true when this Command no longer needs to run execute()

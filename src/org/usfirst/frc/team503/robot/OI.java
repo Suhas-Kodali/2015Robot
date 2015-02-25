@@ -69,25 +69,33 @@ public class OI {
 			mode2Button = new JoystickButton(joystick, 6),
 			rollerButtonExtend = new JoystickButton(joystick, 1),
 			rollerButtonRetract = new JoystickButton(joystick, 2),
-			rollerButtonIn = new JoystickButton(joystick, 3),
-			rollerButtonOut = new JoystickButton(joystick, 4);
+			rollerButtonIn = new JoystickButton(leftJoystick, 1),
+			rollerButtonOut = new JoystickButton(leftJoystick, 2);
 	
 	public static double getJoystickY(){
-		return scale(-joystick.getRawAxis(1), DRIVE_SENSITIVITY);
+		return scale(-leftJoystick.getRawAxis(1), DRIVE_SENSITIVITY)/2;
 		//return scale(-leftJoystick.getY(), DRIVE_SENSITIVITY); 
 	}
 	
 	public static double getJoystickX(){
-		return scale(joystick.getRawAxis(0), TURN_SENSITIVITY);
+		return scale(leftJoystick.getRawAxis(0), TURN_SENSITIVITY)/2;
 		//return scale(leftJoystick.getX(), DRIVE_SENSITIVITY);
 	}
 	
+	public static double getLeftInput(){
+		return scale(-leftJoystick.getY(), DRIVE_SENSITIVITY);
+	}
+	
+	public static double getRightInput(){
+		return scale(-rightJoystick.getY(), DRIVE_SENSITIVITY);
+	}
+	
 	public static double getElevatorInput(){
-		return -joystick.getRawAxis(5);	
+		return -joystick.getRawAxis(1);	
 	}
 	
 	public static double getStealerInput(){
-		return -joystick.getRawAxis(1);
+		return joystick.getRawAxis(0);
 	}
 	
 	public static boolean getRollerButtonIn(){
@@ -100,11 +108,12 @@ public class OI {
 	}
 	
 	public static double getLassoInput(){
-		if(joystick.getRawAxis(2) > joystick.getRawAxis(3)){
+		/*if(joystick.getRawAxis(2) > joystick.getRawAxis(3)){
 			return -joystick.getRawAxis(2);
 		}else{
 			return joystick.getRawAxis(3);
-		}
+		}*/
+		return 0;
 	}
 	
 	public static double scale(double input, double sensitivity){
